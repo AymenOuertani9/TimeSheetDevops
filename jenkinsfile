@@ -66,5 +66,5 @@ pipeline {
             emailext body: 'build failure', subject: 'Jenkins', to:
             'aymen.ouertani@esprit.tn'
         }
- 
+    }
 }
