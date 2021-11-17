@@ -1,6 +1,12 @@
-FROM openjdk:8-jdk-alpine
-ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \JAVA_OPTS=""
-WORKDIR /app
-EXPOSE 8080
-ADD target/Timesheet-0.1.5.jar app.jar
-CMD ["java", "-jar", "/app/app.jar"]
+	# Use an OpenJDK Runtime as a parent image
+	FROM openjdk:8-jre-alpine
+	# Define environment variables
+	ENV SPRING_OUTPUT_ANSI_ENABLED=ALWAYS \JAVA_OPTS=""
+	# Set the working directory to /app
+	WORKDIR /app
+	# Copy the executable into the container at /app
+	ADD target/*.war app.war
+	# Make port 8080 available to the world outside this container
+	EXPOSE 8090
+	# Run app.jar when the container launches
+	CMD ["java", "-jar", "/app/app.jar"]
