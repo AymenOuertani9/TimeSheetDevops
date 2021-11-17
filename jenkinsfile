@@ -44,8 +44,6 @@ dockerImage = ''
                 bat "mvn clean package deploy:deploy-file -DgroupId=tn.esprit -DartifactId=Timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/Timesheet-0.0.1.jar -Dmaven.test.skip=true"
             }
         }
-    }
-        stages {
             stage('Cloning our Git') {
                 steps { git 'https://github.com/AymenOuertani9/TimeSheetDevops.git' }
                 stage('Building our image') {
