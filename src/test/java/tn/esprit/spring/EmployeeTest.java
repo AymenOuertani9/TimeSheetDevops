@@ -21,43 +21,35 @@ import tn.esprit.spring.services.IEmployeService;
 @SpringBootTest
 public class EmployeeTest {
 	@Autowired
-	IEmployeService es;
+	IEmployeService IEmployeService;
 	@Autowired
-	EmployeRepository er;
+	EmployeRepository EmployeRepository;
 
 	private static final Logger l = LogManager.getLogger(EmployeeTest.class);
-	private static final String NOM = "BenMansour"; 
-	private static final String PRENOM = "Ahmed"; 
-	private static final String EMAIL = "hmedM@esprit.tn"; 
+	private static final String NOM = "Ouertani"; 
+	private static final String PRENOM = "Akrem"; 
+	private static final String EMAIL = "Akrem@esprit.tn"; 
 
 	@Test
 	public void verifTaille() {
-		List<Employe> employes = es.getAllEmployes();
+		List<Employe> employes = IEmployeService.getAllEmployes();
 		assertTrue(!employes.isEmpty());
 		String s = "Taille: " + employes.size();
 		l.info(s);
 	}
 
 	@Test
-	public void verifEmail() {
-		Employe employe = es.getAllEmployes().get(0);
-		assertEquals("kallel", employe.getNom());
-		assertTrue(employe.getEmail().contains(".tn"));
-		l.info("Employe: " + employe.getEmail());
-	}
-
-	@Test
 	public void testAjout() {
-		long i = es.getNombreEmployeJPQL();
+		long i = IEmployeService.getNombreEmployeJPQL();
 
 		Employe emp = new Employe();
 		emp.setNom(NOM);
 		emp.setPrenom(PRENOM);
 		emp.setEmail(EMAIL);
-		emp = es.ajouterEmploye(emp);
-		l.info("Nbr: " + es.getNombreEmployeJPQL());
-		assertEquals(i + 1, es.getNombreEmployeJPQL());
-		er.delete(emp);
+		emp = IEmployeService.ajouterEmploye(emp);
+		l.info("Nbr: " + IEmployeService.getNombreEmployeJPQL());
+		assertEquals(i + 1, IEmployeService.getNombreEmployeJPQL());
+		EmployeRepository.delete(emp);
 	}
 	
 	@Test
@@ -66,11 +58,11 @@ public class EmployeeTest {
 		emp.setNom(NOM);
 		emp.setPrenom(PRENOM);
 		emp.setEmail(EMAIL);
-		emp = es.ajouterEmploye(emp);
+		emp = IEmployeService.ajouterEmploye(emp);
 		emp.setPrenom("abbas");
-		emp = er.save(emp);
-		assertEquals("abbas" ,emp.getPrenom());
-		er.delete(emp);
+		emp =EmployeRepository.save(emp);
+		assertEquals("Snoussi" ,emp.getPrenom());
+		EmployeRepository.delete(emp);
 	}
 	
 	@Test
@@ -79,10 +71,10 @@ public class EmployeeTest {
 		emp.setNom(NOM);
 		emp.setPrenom(PRENOM);
 		emp.setEmail(EMAIL);
-		emp = es.ajouterEmploye(emp);
-		long i = es.getNombreEmployeJPQL();
-		er.delete(emp);
-		assertEquals(i - 1, es.getNombreEmployeJPQL());
+		emp = IEmployeService.ajouterEmploye(emp);
+		long i = IEmployeService.getNombreEmployeJPQL();
+		EmployeRepository.delete(emp);
+		assertEquals(i - 1, IEmployeService.getNombreEmployeJPQL());
 		
 	}
 	
