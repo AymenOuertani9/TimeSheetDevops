@@ -1,0 +1,47 @@
+pipeline {
+
+    agent any
+
+
+    stages {
+       stage ('GIT') {
+            steps {
+               echo "Getting Project from Git"; 
+                git branch: "aymen", 
+                    url: "https://github.com/AymenOuertani9/TimeSheetDevops.git";
+                 
+            }
+        }
+
+        stage("Build") {
+            steps {
+                bat "mvn -version"
+                bat "mvn clean package -DskipTests"
+                // sh "mvn clean package -DskipTests" pour une machine linux
+            }
+        }
+       
+        stage ('MVN TEST') {
+            steps {
+                echo "Maven Test JUnit";
+                bat 'mvn test';
+            }
+        }
+        
+        stage("Sonar") {
+            steps {
+                bat "mvn sonar:sonar"
+            }
+        }
+        
+        stage("DEPLOY") {
+            steps {
+                bat "mvn clean package deploy:deploy-file -DgroupId=tn.esprit -DartifactId=Timesheet -Dversion=0.0.1 -DgeneratePom=true -Dpackaging=jar -DrepositoryId=deploymentRepo -Durl=http://localhost:8081/repository/maven-releases/ -Dfile=target/Timesheet-0.0.1.jar -Dmaven.test.skip=true"
+            }
+        }
+       
+    }
+   
+  
+    
+}
