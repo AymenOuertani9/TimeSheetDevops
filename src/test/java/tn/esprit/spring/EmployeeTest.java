@@ -41,15 +41,15 @@ public class EmployeeTest {
 	@Test
 	public void testAjout() {
 		long i = IEmployeService.getNombreEmployeJPQL();
-
 		Employe emp = new Employe();
 		emp.setNom(NOM);
 		emp.setPrenom(PRENOM);
 		emp.setEmail(EMAIL);
 		emp = IEmployeService.ajouterEmploye(emp);
-		l.info("Nbr: " + IEmployeService.getNombreEmployeJPQL());
+		String s = "Nbr: " + IEmployeService.getNombreEmployeJPQL();
+		l.info(s);
 		assertEquals(i + 1, IEmployeService.getNombreEmployeJPQL());
-		EmployeRepository.delete(emp);
+		//EmployeRepository.delete(emp);
 	}
 	
 	@Test
@@ -59,10 +59,14 @@ public class EmployeeTest {
 		emp.setPrenom(PRENOM);
 		emp.setEmail(EMAIL);
 		emp = IEmployeService.ajouterEmploye(emp);
-		emp.setPrenom("abbas");
-		emp =EmployeRepository.save(emp);
-		assertEquals("Snoussi" ,emp.getPrenom());
-		EmployeRepository.delete(emp);
+		emp.setNom("Snoussi");
+		emp = EmployeRepository.save(emp);
+		String s = "modif succ " + emp.getNom();
+		String  s2 =  "Nbr: " + IEmployeService.getNombreEmployeJPQL();
+		l.info(s);
+		l.info(s2);
+		assertEquals("Snoussi" ,emp.getNom());
+		//EmployeRepository.delete(emp);
 	}
 	
 	@Test
@@ -74,6 +78,8 @@ public class EmployeeTest {
 		emp = IEmployeService.ajouterEmploye(emp);
 		long i = IEmployeService.getNombreEmployeJPQL();
 		EmployeRepository.delete(emp);
+		String s = "Nbr: " + IEmployeService.getNombreEmployeJPQL();
+		l.info(s);
 		assertEquals(i - 1, IEmployeService.getNombreEmployeJPQL());
 		
 	}
